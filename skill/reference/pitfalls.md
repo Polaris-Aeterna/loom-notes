@@ -8,8 +8,12 @@ Hard-won from building the example notebooks. Each one cost a compile cycle.
   defaults to pdflatex; the repo's `.vscode/settings.json` overrides it to XeLaTeX.
 - **Run twice** (or use latexmk): the selvage rail uses `remember picture`, and the TOC
   + `\ref`s resolve on the second pass.
-- Non-macOS: swap the three `\newfontfamily` lines in `loom.cls` for any display sans;
-  Libertinus (body + math) is bundled with TeX Live and stays.
+- Cross-platform fonts are **automatic** now: `loom.cls` wraps each face in `\IfFontExistsTF`,
+  so macOS uses Optima/Avenir/Menlo (and Songti/Kaiti/PingFang for CJK) while Windows/Linux fall
+  back to Lato/Gillius/Libertinus (and SimSun/KaiTi/Microsoft YaHei for CJK). No edit needed.
+  On non-macOS the log may show a benign probe miss (`font not found, using nullfont`) as each
+  `\IfFontExistsTF` tests the macOS face, plus one cosmetic `Font shape … sc undefined` from the
+  cover footer's `\textsc` — both harmless.
 
 ## unicode-math gotchas (these throw `Missing { inserted` / `\__um_group_begin:`)
 - **`\mathbb` in a subscript needs braces.** `\PP^1_\R` fails; write `\PP^1_{\R}`.

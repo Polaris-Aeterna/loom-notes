@@ -16,6 +16,10 @@
 *.vrb
 *.xdv
 
+# generated notebooks: sources/ and main.tex are tracked, built PDFs are not
+output/**/*.pdf
+output/**/*.synctex.gz
+
 # macOS
 .DS_Store
 

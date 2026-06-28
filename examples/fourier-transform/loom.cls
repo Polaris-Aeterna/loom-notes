@@ -37,20 +37,44 @@
 \geometry{top=2.0cm, bottom=2.3cm, left=2.9cm, right=3.1cm,
           marginparwidth=2.35cm, marginparsep=0.35cm, headsep=14pt}
 
-% ----- fonts: Libertinus (text+math, portable) + macOS display faces --------
+% ----- fonts: Libertinus (text+math, portable) + display faces --------------
+%  The signature faces are macOS system fonts (Optima / Avenir Next / Menlo).
+%  Where they are absent (Windows, Linux, plain TeX Live) we fall back through
+%  portable faces that ship with TeX Live, then to Libertinus, which always
+%  exists.  Output on macOS is unchanged; everywhere else it still compiles.
 \RequirePackage{libertinus-otf}             % loads fontspec + unicode-math
 \RequirePackage{microtype}
-\newfontfamily\headingfont{Optima}          % humanist, incised -- the signature
-\newfontfamily\strandfont{Avenir Next}      % the informal "intuition voice"
-\newfontfamily\labelfont{Avenir Next Condensed}
-\setmonofont{Menlo}[Scale=0.86]
+
+% headings: the incised humanist signature
+\IfFontExistsTF{Optima}{\newfontfamily\headingfont{Optima}}{%
+  \IfFontExistsTF{Lato}{\newfontfamily\headingfont{Lato}}{%
+    \newfontfamily\headingfont{Libertinus Sans}}}
+% the informal "intuition voice"
+\IfFontExistsTF{Avenir Next}{\newfontfamily\strandfont{Avenir Next}}{%
+  \IfFontExistsTF{Lato}{\newfontfamily\strandfont{Lato}}{%
+    \newfontfamily\strandfont{Libertinus Sans}}}
+% condensed labels (numbers, weave-ids, the cover footer)
+\IfFontExistsTF{Avenir Next Condensed}{\newfontfamily\labelfont{Avenir Next Condensed}}{%
+  \IfFontExistsTF{Gillius ADF Cond}{\newfontfamily\labelfont{Gillius ADF Cond}}{%
+    \newfontfamily\labelfont{Libertinus Sans}}}
+% monospace
+\IfFontExistsTF{Menlo}{\setmonofont{Menlo}[Scale=0.86]}{%
+  \IfFontExistsTF{Consolas}{\setmonofont{Consolas}[Scale=0.86]}{%
+    \setmonofont{Libertinus Mono}[Scale=0.92]}}
 \linespread{1.06}
 
 \ifloom@cjk
   \RequirePackage{xeCJK}
-  \setCJKmainfont{Songti SC}[ItalicFont={Kaiti SC}]  % \emph on 中文 -> 楷体
-  \setCJKsansfont{PingFang SC}
-  \setCJKmonofont{PingFang SC}
+  % 中文正文 -> 宋体; \emph 落到楷体.  macOS: Songti/Kaiti; Windows: SimSun/KaiTi.
+  \IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}[ItalicFont={Kaiti SC}]}{%
+    \IfFontExistsTF{SimSun}{\setCJKmainfont{SimSun}[ItalicFont={KaiTi}]}{%
+      \setCJKmainfont{Noto Serif CJK SC}}}
+  \IfFontExistsTF{PingFang SC}{\setCJKsansfont{PingFang SC}}{%
+    \IfFontExistsTF{Microsoft YaHei}{\setCJKsansfont{Microsoft YaHei}}{%
+      \setCJKsansfont{Noto Sans CJK SC}}}
+  \IfFontExistsTF{PingFang SC}{\setCJKmonofont{PingFang SC}}{%
+    \IfFontExistsTF{Microsoft YaHei}{\setCJKmonofont{Microsoft YaHei}}{%
+      \setCJKmonofont{Noto Sans CJK SC}}}
   \xeCJKsetup{CJKmath=true}
 \fi
 

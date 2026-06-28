@@ -82,10 +82,11 @@ in [`template/main.tex`](template/main.tex). Open the repo in **VS Code** and th
 bundled [`.vscode/settings.json`](.vscode/settings.json) builds with XeLaTeX on
 every save (LaTeX Workshop defaults to pdflatex, which fails here).
 
-> **Requirements.** XeLaTeX (TeX Live 2023+). Libertinus ships with TeX Live;
-> Optima / Avenir Next / Songti / 楷体 are macOS system fonts. On other platforms,
-> swap the three `\newfontfamily` lines in [`loom.cls`](loom.cls) for any display
-> sans — everything else stays.
+> **Requirements.** XeLaTeX (TeX Live 2023+). Libertinus ships with TeX Live.
+> Fonts are **cross-platform out of the box**: on macOS Loom uses Optima / Avenir
+> Next / Menlo (and Songti / 楷体 for 中文); on Windows and Linux it falls back
+> automatically to Lato / Gillius / Libertinus (and SimSun / KaiTi / Microsoft
+> YaHei) — no edits to [`loom.cls`](loom.cls) needed.
 
 ## The toolkit (all built into the class)
 
@@ -110,6 +111,32 @@ paper into a finished Loom notebook: it finds the **spine**, drafts each section
 the Loom grammar, engineers the gaps at the right density (~70% read / 30% fill),
 compiles, and verifies. See [`SKILL.md`](skill/SKILL.md), and the hard-won XeLaTeX
 gotchas in [`reference/pitfalls.md`](skill/reference/pitfalls.md).
+
+## Automated notebooks: `sources/` → `output/`
+
+For a hands-off flow, drop a source file in [`sources/`](sources/) and let Claude
+Code do the rest — **you don't pick the spine**:
+
+```text
+sources/X.md   ─►   Claude Code            ─►   output/<name>/
+(you drop it)       auto-finds the spine        main.tex · metadata.json
+                    & reorganizes around it      compile.sh · compile.ps1 · loom.cls
+```
+
+1. Place a `.md` / `.txt` / `.pdf` in `sources/`.
+2. Ask: *"Make Loom notes from `sources/X.md`."*
+3. Claude Code auto-identifies the organizing **spine** (highest coverage,
+   predictive power, teaching impact), reorganizes the material around it, and
+   writes a complete notebook to `output/<name>/` — recording the spine analysis
+   (idea, pattern, confidence, reasoning) in `metadata.json`.
+4. `bash compile.sh` (or `./compile.ps1` on Windows) and review the PDF.
+
+See [`WORKFLOW.md`](WORKFLOW.md) for the full flow,
+[`SPINE-ANALYSIS-GUIDE.md`](SPINE-ANALYSIS-GUIDE.md) for how the spine is chosen,
+and [`.claude-instructions.md`](.claude-instructions.md) for the syntax it follows.
+A worked example ships in
+[`output/pigeonhole-principle/`](output/pigeonhole-principle/) (spine:
+*"choose the boxes, then count"*).
 
 ## Examples
 
