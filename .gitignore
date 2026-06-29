@@ -21,3 +21,7 @@
 
 # editor
 *.swp
+
+# URW Classico fonts are AFPL (non-commercial) -- never bundle them.
+# Users supply their own; see overleaf/classico/fonts/README.md
+overleaf/**/fonts/*.otf
