@@ -1,0 +1,94 @@
+% ===========================================================================
+%  Nonlinear Algebra -- fill-in notes on Chapters 1-2
+%  (Michalek & Sturmfels, "Invitation to Nonlinear Algebra", AMS GSM 211)
+%  woven on LOOM.   compile:  latexmk -xelatex main   (or xelatex twice)
+%
+%  HOW THESE NOTES WORK
+%   - Read the strands and the stated theorems (passive intake).
+%   - Fill the blanks \fillin, the \TODO proof gaps, and the "your turn" boxes
+%     (active recall). The book is your answer key.
+% ===========================================================================
+\documentclass[cjk]{loomnote}   % [cjk] only for the pen name; all prose is English
+
+% --- pedagogy tools (\block \trigger \TODO \fillin \recall yourturn \workspace)
+%     and booktabs/tabularx/L now come built into loom.cls v0.2 ---------------
+
+% --- math shorthands --------------------------------------------------------
+
+
+\runningthread{nonlinear algebra · ch 1--2}
+
+\begin{document}
+
+\loomcover
+  {Nonlinear Algebra}
+  {Fill-in notes · Chapters 1--2 · Michałek \& Sturmfels}
+  {北极甜虾 (剑心犹在！)}
+  {\today}
+
+\enablerail
+
+% ===========================================================================
+\section*{The dictionary, and how to read these notes}
+\addcontentsline{toc}{section}{The dictionary · how to read}
+\warmth{0}
+
+\begin{strand}
+The whole of Chapters 1--2 is \emph{one} idea, stated twice by Sophie Germain:
+\keyword{``Algebra is but written geometry''} (Ch.\,1) and
+\keyword{``Geometry is but drawn algebra''} (Ch.\,2). There is a dictionary
+between the \emph{algebra} side (ideals in the polynomial ring $K[\xb]$) and the
+\emph{geometry} side (varieties in $K^n$ or $\PP^n$). Learn the dictionary and
+the two chapters become one.
+\end{strand}
+
+\block{How to read these notes (passive \emph{and} active)}
+\begin{itemize}[leftmargin=1.3em,itemsep=1pt]
+  \item \keyword{Read} the strands and the stated theorems. That is the passive intake.
+  \item \keyword{Fill} the blanks \fillin[1.2cm], the \TODO{the missing step} gaps inside proofs,
+        and the \emph{Your turn} boxes. That is the active recall. The book is your answer key.
+  \item Bump each section's opening \texttt{\textbackslash warmth\{0\}} to $0$--$5$ once you can rebuild it cold.
+\end{itemize}
+
+\block{The master dictionary (fill it in as you go)}
+\noindent\begin{tabularx}{\linewidth}{@{}L L@{}}
+\toprule
+{\color{indigo}Algebra: ideals in $K[\xb]$} & {\color{madder}Geometry: varieties in $K^n,\PP^n$}\\
+\midrule
+ideal $I$                       & variety $\V(I)$ \;(§\ref{sec:affine})\\
+vanishing ideal $\Ideal(W)$ (radical) & variety $W=\V(\Ideal(W))$\\
+$I\subseteq J$                  & $\V(I)\;\fillin[1cm]\;\V(J)$ \;(which way?)\\
+sum $I+J$                       & $\fillin[2cm]$ of $\V(I),\V(J)$\\
+intersection $I\cap J$          & $\fillin[2cm]$ of $\V(I),\V(J)$\\
+prime ideal                     & \fillin[3cm] variety \;(§\ref{sec:affine})\\
+maximal ideal $\gen{x_1-p_1,\dots,x_n-p_n}$ & a single point $\fillin[1.5cm]$\\
+radical ideal                   & ($\Ideal\!=\!\V$ inverse, up to radical: Nullstellensatz, Ch.\,6)\\
+quotient $K[\xb]/\Ideal(W)$     & coordinate ring $K[W]$ = functions on $W$\\
+dimension of $I$ (§\ref{sec:dimdeg}) & dimension of $\V(I)$\\
+degree of $I$                   & \# points of a general linear slice\\
+$\gen{f,\partial f/\partial x_1,\dots}$ has no zeros & $\V(f)$ is \fillin[2cm]\\
+homogeneous ideal               & projective variety \;(§\ref{sec:proj})\\
+primary decomposition (Ch.\,3)  & decomposition into irreducibles\\
+\bottomrule
+\end{tabularx}
+
+\begin{strand}
+The map $\V$ sends algebra to geometry; the map $\Ideal$ sends geometry back to
+algebra. They are \emph{inclusion-reversing}, and they are almost inverse to each
+other. ``Almost'' is the content of the Nullstellensatz (Chapter 6); for now,
+$\Ideal(\V(I))=\rad(I)$ is the slogan to carry.
+\end{strand}
+
+\newpage
+{\small\tableofcontents}
+
+\clearpage
+% ===========================================================================
+\input{sections/01-ideals}
+\input{sections/02-groebner}
+\input{sections/03-dimension-degree}
+\input{sections/04-affine-varieties}
+\input{sections/05-projective-varieties}
+\input{sections/06-low-dimensions}
+
+\end{document}
