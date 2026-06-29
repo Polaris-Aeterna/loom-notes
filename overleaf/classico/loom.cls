@@ -87,13 +87,20 @@
 
 \ifloom@cjk
   \RequirePackage{xeCJK}
-  \setCJKmainfont{Noto Serif CJK SC}[
-    UprightFont=*,
-    BoldFont=* Bold,
-    ItalicFont=Noto Serif CJK SC,
-    BoldItalicFont=Noto Serif CJK SC Bold]
-  \setCJKsansfont{Noto Sans CJK SC}
-  \setCJKmonofont{Noto Sans CJK SC}
+  % Prefer Noto CJK (bundled on Overleaf); fall back to macOS faces locally.
+  \IfFontExistsTF{Noto Serif CJK SC}{%
+    \setCJKmainfont{Noto Serif CJK SC}[
+      UprightFont=*,
+      BoldFont=* Bold,
+      ItalicFont=Noto Serif CJK SC,
+      BoldItalicFont=Noto Serif CJK SC Bold]
+    \setCJKsansfont{Noto Sans CJK SC}
+    \setCJKmonofont{Noto Sans CJK SC}
+  }{%
+    \setCJKmainfont{Songti SC}[ItalicFont={Kaiti SC}]
+    \setCJKsansfont{PingFang SC}
+    \setCJKmonofont{PingFang SC}
+  }%
   \xeCJKsetup{CJKmath=true}
 \fi
 
