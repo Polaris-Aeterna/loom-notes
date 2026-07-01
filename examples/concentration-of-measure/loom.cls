@@ -46,17 +46,18 @@
 \RequirePackage{microtype}
 
 % headings: the incised humanist signature
-\IfFontExistsTF{Optima}{\newfontfamily\headingfont{Optima}}{%
-  \IfFontExistsTF{Lato}{\newfontfamily\headingfont{Lato}}{%
-    \newfontfamily\headingfont{Libertinus Sans}}}
+% NB: [Ligatures=TeX] so ---/``''/-- fire in display text (libertinus body has them already).
+\IfFontExistsTF{Optima}{\newfontfamily\headingfont{Optima}[Ligatures=TeX]}{%
+  \IfFontExistsTF{Lato}{\newfontfamily\headingfont{Lato}[Ligatures=TeX]}{%
+    \newfontfamily\headingfont{Libertinus Sans}[Ligatures=TeX]}}
 % the informal "intuition voice"
-\IfFontExistsTF{Avenir Next}{\newfontfamily\strandfont{Avenir Next}}{%
-  \IfFontExistsTF{Lato}{\newfontfamily\strandfont{Lato}}{%
-    \newfontfamily\strandfont{Libertinus Sans}}}
+\IfFontExistsTF{Avenir Next}{\newfontfamily\strandfont{Avenir Next}[Ligatures=TeX]}{%
+  \IfFontExistsTF{Lato}{\newfontfamily\strandfont{Lato}[Ligatures=TeX]}{%
+    \newfontfamily\strandfont{Libertinus Sans}[Ligatures=TeX]}}
 % condensed labels (numbers, weave-ids, the cover footer)
-\IfFontExistsTF{Avenir Next Condensed}{\newfontfamily\labelfont{Avenir Next Condensed}}{%
-  \IfFontExistsTF{Gillius ADF Cond}{\newfontfamily\labelfont{Gillius ADF Cond}}{%
-    \newfontfamily\labelfont{Libertinus Sans}}}
+\IfFontExistsTF{Avenir Next Condensed}{\newfontfamily\labelfont{Avenir Next Condensed}[Ligatures=TeX]}{%
+  \IfFontExistsTF{Gillius ADF Cond}{\newfontfamily\labelfont{Gillius ADF Cond}[Ligatures=TeX]}{%
+    \newfontfamily\labelfont{Libertinus Sans}[Ligatures=TeX]}}
 % monospace
 \IfFontExistsTF{Menlo}{\setmonofont{Menlo}[Scale=0.86]}{%
   \IfFontExistsTF{Consolas}{\setmonofont{Consolas}[Scale=0.86]}{%

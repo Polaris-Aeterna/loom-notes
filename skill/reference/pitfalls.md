@@ -38,9 +38,15 @@ Hard-won from building the example notebooks. Each one cost a compile cycle.
   not a literal arrow, or it tofus.
 
 ## Style
-- Go light on em-dashes (`---`) in prose; prefer commas/colons. When bulk-replacing in
-  Chinese files, use a tool that handles UTF-8 (`perl -CSD` *double-encodes* an ASCII-typed
-  Chinese replacement → mojibake; use `\x{FF0C}` escapes or Python with `encoding='utf-8'`).
+- TeX input ligatures now fire in the display fonts too: the class loads `\headingfont`,
+  `\strandfont`, and `\labelfont` with `[Ligatures=TeX]`, so `---` → em dash and `` `` ``/`''`
+  → curly quotes render correctly in `strand`/`\whisper`/`\block`/headings/cover (the body font
+  Libertinus already had them). You can write `---` and `` ``…'' `` directly; no Unicode
+  workaround needed. (`\setmonofont` is deliberately left without it, so dashes stay literal in
+  code.) Stylistically, still go light on em-dashes in prose; prefer commas/colons.
+- When bulk-replacing in Chinese files, use a tool that handles UTF-8 (`perl -CSD`
+  *double-encodes* an ASCII-typed Chinese replacement → mojibake; use `\x{FF0C}` escapes or
+  Python with `encoding='utf-8'`).
 
 ## Verify before declaring done
 Rasterize a page and actually look at it:
