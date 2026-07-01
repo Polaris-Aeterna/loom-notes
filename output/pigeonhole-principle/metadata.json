@@ -1,0 +1,26 @@
+{
+  "notebook": "pigeonhole-principle",
+  "source": "sources/pigeonhole.md",
+  "generated": "2026-06-28",
+  "spine": {
+    "spine": "Choose the boxes, then count: every result is the one counting fact, sharpened or applied.",
+    "pattern": "single-theorem",
+    "confidence": 0.9,
+    "reasoning": "One counting fact dominates the whole source. The simple form is a special case of the strong form; the worked examples (socks, birthdays, R(3,3)) and the Erdős–Szekeres result are not different tools but the same tool with a clever choice of boxes/labels, so every section is upstream or downstream of the one theorem. Runner-up was an engine-list of 'tricks', rejected because the tricks share one engine — single-theorem has strictly higher coverage and teaching impact, and the skill the source repeatedly names ('choosing the boxes') is exactly the spine.",
+    "key_concepts": [
+      "pigeonhole principle (Dirichlet)",
+      "strong form: some box holds at least ceil(n/k)",
+      "contrapositive + counting as the proof engine",
+      "choosing the boxes / objects",
+      "Ramsey number R(3,3) = 6",
+      "Erdős–Szekeres monotone subsequence"
+    ],
+    "section_order": [
+      "The one idea, and how to read",
+      "The principle (strong form; simple form as a special case)",
+      "Choosing the boxes — worked applications",
+      "The non-obvious move — a clever map into a small label set"
+    ]
+  },
+  "ratio": { "readable": 0.70, "fillable": 0.30 }
+}

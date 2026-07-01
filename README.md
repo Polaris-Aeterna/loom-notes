@@ -125,6 +125,43 @@ the Loom grammar, engineers the gaps at the right density (~70% read / 30% fill)
 compiles, and verifies. See [`SKILL.md`](skill/SKILL.md), and the hard-won XeLaTeX
 gotchas in [`reference/pitfalls.md`](skill/reference/pitfalls.md).
 
+## Automated notebooks: `sources/` → `output/`
+
+*The source→notebook workflow — `sources/` → `output/`, `CLAUDE.md`, and the
+[`skill/reference/`](skill/reference/) authoring + spine guides — contributed by
+[Sellyew](https://github.com/Sellyew).*
+
+For a hands-off flow, drop a source file in [`sources/`](sources/) and let Claude
+Code do the rest — **you don't pick the spine**:
+
+```text
+sources/X.md   ─►   Claude Code            ─►   output/<name>/
+(you drop it)       auto-finds the spine        main.tex · metadata.json
+                    & reorganizes around it      compile.sh · compile.ps1 · loom.cls
+```
+
+1. Place a `.md` / `.txt` / `.pdf` in `sources/`.
+2. Ask: *"Make Loom notes from `sources/X.md`."*
+3. Claude Code auto-identifies the organizing **spine** (highest coverage,
+   predictive power, teaching impact), reorganizes the material around it, and
+   writes a complete notebook to `output/<name>/` — recording the spine analysis
+   (idea, pattern, confidence, reasoning) in `metadata.json`.
+4. `bash compile.sh` (or `./compile.ps1` on Windows), then **review the PDF**. A good `main.pdf` shows:
+   - a **woven cover** with the **spine** as its subtitle, and the **left selvage rail** on every page;
+   - **colored knots** — indigo theorems, madder definitions, weld examples;
+   - visible **`\fillin` blanks**, **`\TODO` hints**, and **`yourturn`** boxes with `\workspace` lines;
+   - margin **`\warmth`** gauges and **`\recall`** prompts;
+   - structure that follows **the spine**, not the source's section order.
+
+   If the gaps land in the wrong places or the spine feels weak, tell Claude Code what to change —
+   e.g. *"blank the keystone step in the strong-form proof instead."*
+
+See [`skill/reference/spine-analysis.md`](skill/reference/spine-analysis.md) for how the spine is
+chosen, and [`skill/reference/authoring.md`](skill/reference/authoring.md) for the syntax it follows.
+A worked example ships in
+[`output/pigeonhole-principle/`](output/pigeonhole-principle/) (spine:
+*"choose the boxes, then count"*).
+
 ## Examples
 
 The first four are **original expositions of public-domain mathematics** — one each from linear

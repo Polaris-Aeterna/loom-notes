@@ -1,0 +1,145 @@
+%% Loom fill-in notes — auto-generated from sources/pigeonhole.md
+%% Spine: "Choose the boxes, then count."  (single-theorem; confidence 0.9)
+%% Build: latexmk -xelatex main.tex   (or: bash compile.sh / ./compile.ps1)
+\documentclass{loom}
+\runningthread{pigeonhole — choose the boxes, then count}
+
+% braced shorthands (unicode-math: subscripts/macros must be braced)
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\begin{document}
+
+\loomcover{The Pigeonhole Principle}{Choose the boxes, then count.}{combinatorics, week 3}{2026}
+
+% =====================================================================
+\section*{The one idea, and how to read}
+\warmth{0}\quad\whisper{One trivial counting fact; all the work is choosing what the boxes are.}
+
+\begin{strand}
+The principle itself is a one-line truth: crowd more objects than boxes, and some box is shared.
+Every theorem and every puzzle below is \emph{the same fact} --- the only thing that changes,
+and the only thing you actually have to invent, is \keyword{what counts as a box and what counts
+as an object}. Read the statements; fill the keystone of each proof and the box-choice in each
+application.
+\end{strand}
+
+\block{The master move (read it across)}
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}l L@{}}
+\toprule
+objects ($n$) & the things you are forced to place \\
+boxes ($k$)   & the labels you map them to --- \emph{choose these well} \\
+the map       & a function objects $\to$ boxes; the cleverness lives here \\
+the count     & if $n>k$, some box repeats; sharply, some box holds $\ge \fillin[1.2cm]$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\trigger{you must guarantee a coincidence, but cannot say \emph{which} two things coincide.}
+\recall{Fill the master count: how many in the fullest box, at least?}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% =====================================================================
+\section{The principle}
+\warmth{0}\quad\whisper{State the sharp version; the famous one-liner is just $n=k+1$.}
+
+\begin{strand}
+There is really one theorem here. The schoolbook version (``$n>k$ forces a shared box'') is the
+special case $n=k+1$ of the sharp statement, so we lead with the sharp one and read the rest off it.
+\end{strand}
+
+\begin{theorem}[strong form; src \S3]
+If $n$ objects are placed into $k$ boxes, some box contains at least
+$\ceil{n/k}$ objects.
+\end{theorem}
+
+\begin{proof}
+Suppose, for contradiction, that every box held at most $\ceil{n/k}-1$ objects.
+\TODO{the keystone bound: add up over all $k$ boxes and reach $< n$}
+That contradicts having placed all $n$ objects, so some box holds at least $\ceil{n/k}$.
+\end{proof}
+
+\recall{Why is the bound $\ceil{n/k}$ and not $\floor{n/k}$?}
+
+\begin{corollary}[simple form; src \S2]
+A function $f:A\to B$ between finite sets with $|A|>|B|$ cannot be injective.
+\end{corollary}
+
+\begin{definition}[injective, the clause that breaks; src \S2]
+A map $f:A\to B$ is \keyword{injective} when it sends distinct inputs to distinct outputs, i.e.
+$a\neq a' \implies \fillin[2.2cm]$. The proof's whole force is that injectivity would give
+$|B|\ge|A|$.
+\end{definition}
+
+\begin{strand}
+Take $n=k+1$ in the strong form: $\ceil{(k+1)/k}=2$, so some box holds two. That \emph{is} the
+simple form. One theorem, read at two settings.
+\end{strand}
+
+% =====================================================================
+\section{Choosing the boxes}
+\warmth{0}\quad\whisper{Each puzzle is one sentence of setup: name the boxes, name the objects.}
+
+\begin{strand}
+Now the only skill. In each problem the answer is forced the instant you pick the right boxes;
+the arithmetic is the master count from page one.
+\end{strand}
+
+\begin{example}[the matching pair; src \S4]
+A drawer has black and brown socks; you draw in the dark. Boxes $=$ the two colours, objects $=$
+socks drawn. With $3$ socks in $2$ colour-boxes, some colour has $\ceil{3/2}=2$: a pair. So you
+need to draw \fillin[1cm].
+\end{example}
+
+\begin{example}[shared birth month; src \S4]
+Among $13$ people, two share a birth month. Boxes $= 12$ months, objects $= 13$ people; since
+$13>12$, two collide.
+\end{example}
+
+\begin{yourturn}
+\textbf{Acquaintances ($R(3,3)=6$).} In any $6$ people, $3$ are mutual acquaintances or $3$ are
+mutual strangers. Fix one person $P$. Of the other $5$, by pigeonhole at least $\ceil{5/2}=3$ fall
+into one box --- ``acquaintances of $P$'' or ``strangers to $P$.'' Finish it: what are the boxes
+here, and why do those $3$ settle the claim?
+\workspace[3]
+\end{yourturn}
+
+% =====================================================================
+\section{The non-obvious move}
+\warmth{0}\quad\whisper{When boxes aren't handed to you, \emph{build a map} into a small label set.}
+
+\begin{strand}
+The deep applications hide a constructed function from the objects into a set provably smaller
+than the domain. Define the labels well and the pigeonhole does the rest.
+\end{strand}
+
+\begin{theorem}[Erdős--Szekeres, special case; src \S5]
+Any sequence of $n^2+1$ distinct reals contains a monotone subsequence of length $n+1$.
+\end{theorem}
+
+\begin{proof}
+Label term $i$ with the pair $(u_i,d_i)$: the longest increasing run ending at $i$, and the
+longest decreasing run ending at $i$. If no monotone run reaches $n+1$, every label lies in the
+grid $\{1,\dots,n\}^2$, which has only $n^2$ cells.
+\TODO{count: $n^2+1$ terms into $n^2$ label-cells, so two terms share a label}
+Comparing two terms with the same label forces one of $u$ or $d$ to grow, a contradiction.
+\end{proof}
+
+\begin{yourturn}
+The boxes here are the $n^2$ \emph{labels}, the objects are the $n^2+1$ \emph{terms}. Write the
+one-line contradiction once two terms $i<j$ share a label $(u,d)$: what happens to $u_j$ or $d_j$?
+\workspace[2]
+\end{yourturn}
+
+\loose{Generalise: $n$ objects in $k$ boxes give a box with $\ge\ceil{n/k}$. What is the dual
+``some box has $\le\floor{n/k}$'' good for?}
+
+\begin{strand}
+\keyword{Takeaway.} The principle is a one-line counting fact; the craft is choosing the boxes ---
+and, when they aren't given, \emph{building a map into a set too small to keep everyone apart}.
+\end{strand}
+
+\end{document}
