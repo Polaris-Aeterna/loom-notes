@@ -1,0 +1,109 @@
+% ===========================================================================
+%  LOOM -- Overleaf edition · demo / starter document
+%  Compile with XeLaTeX (Menu > Compiler > XeLaTeX on Overleaf).
+%  Nothing to upload: every font ships with Overleaf's TeX Live.
+%
+%  The [cjk] option turns on Chinese via Noto CJK SC (bundled on Overleaf;
+%  macOS Songti/Kaiti as a local fallback).  Drop it for a pure-English doc.
+% ===========================================================================
+\documentclass[cjk]{loom}
+
+\runningthread{loom · overleaf edition}
+
+\begin{document}
+
+\loomcover
+  {Loom}
+  {A woven notebook class · Overleaf edition}
+  {北极甜虾 (剑心犹在！)}
+  {\today}
+
+{\small\tableofcontents}
+\clearpage
+
+% ===========================================================================
+\section{The weave at a glance}
+\warmth{3}
+
+\begin{strand}
+A page is cloth on a loom: you don't just typeset the maths, you typeset the
+\keyword{weave} of your own understanding. The \emph{warp} runs along the left
+selvage rail, a \emph{knot} binds threads into a result, and a \emph{loose}
+thread is a question you haven't closed yet.
+\end{strand}
+
+This edition keeps every command of the local \textsc{loom} class but swaps the
+macOS display faces for \texttt{Libertinus Sans}, so it compiles on Overleaf
+with \keyword{no font uploads}. The body is Libertinus Serif and the maths is
+Libertinus Math, exactly as in the original.\loose{Try editing the dye colours
+in \texttt{loom.cls} -- indigo, madder, weld.}
+
+\begin{strand}
+中英混排也开箱即用：用 \texttt{[cjk]} 选项即可。中文走 Noto CJK SC（Overleaf
+自带），\emph{强调}的中文在本地回退到楷体。一行公式 $\int_0^1 x^2\,dx = \tfrac13$
+照常排版。
+\end{strand}
+
+\subsection{Knots} A knot is a result that binds threads together.
+
+\begin{definition}[Woven space]
+A \keyword{woven space} is a set $W$ together with a family of threads
+$\{t_i\}_{i\in I}$, $t_i \subseteq W$, whose union is all of $W$.
+\end{definition}
+
+\begin{theorem}[Selvage bound]
+For any finite woven space $W$ with $n$ threads, the number of knots is at most
+$\binom{n}{2}$, with equality iff every pair of threads crosses exactly once.
+\end{theorem}
+
+\begin{proof}
+Each knot is determined by the unordered pair of threads it binds, so the count
+is bounded by the number of such pairs, $\binom{n}{2}$. Equality forces every
+pair to meet, which is the stated crossing condition.
+\end{proof}
+
+\begin{example}
+The complete weave on $4$ threads has $\binom{4}{2}=6$ knots.
+\end{example}
+
+% ===========================================================================
+\section{Fill-in study notes}
+\warmth{1}
+
+The pedagogy tools turn a passive read into active recall: state the result, but
+leave the load-bearing steps \keyword{blank}.
+
+\begin{definition}[Continuity, fill the clause]
+$f\colon X\to Y$ is \keyword{continuous} at $x_0$ if for every
+$\varepsilon>0$ there is a $\delta>0$ such that
+\[ d_X(x,x_0)<\delta \implies d_Y\big(f(x),f(x_0)\big) < \fillin[1.4cm]. \]
+\end{definition}
+
+\begin{proof}[Sketch, with a gap]
+Compose the two estimates and chase the quantifiers.
+\TODO{which $\delta$ makes the implication hold?}
+\end{proof}
+
+\recall{State the $\varepsilon$--$\delta$ clause without looking.}
+
+\begin{yourturn}
+Prove that the composition of two continuous maps is continuous. Use the
+workspace below.
+\end{yourturn}
+\workspace[3]
+
+% ===========================================================================
+\section{Margins, warps and warmth}
+\warmth{5}
+
+A \loose{is this tight enough?} loose thread parks an open question in the
+margin. A \warp{key lemma} declares a recurring thread you can \pick{key lemma}
+later. The warmth gauge \warmth{4} records how well you actually grok a block,
+from \warmth{0} to \warmth{5}.
+
+\begin{remark}
+Everything here is plain XeLaTeX. Delete the demo content, keep
+\texttt{loom.cls}, and start weaving your own notes.
+\end{remark}
+
+\end{document}

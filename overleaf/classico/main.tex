@@ -1,0 +1,90 @@
+\documentclass[cjk]{loom}
+%选用cjk,以支持中文字体
+
+\ExplSyntaxOn
+\newcommand{\enpunct}[1]{%
+  \tl_set:Nn \l_tmpa_tl {#1}
+  \regex_replace_all:nnN {，} {,\ } \l_tmpa_tl % 中文逗号→英文逗号+空格
+  \regex_replace_all:nnN {。} {.\ } \l_tmpa_tl % 中文句号→英文句号+空格
+  \tl_use:N \l_tmpa_tl
+}
+\ExplSyntaxOff
+%新命令转换标点
+
+\runningthread{built upon the LOOM template}
+%运行标题
+
+\begin{document}
+
+\loomcover
+  {Introduction \par to the classico edition}
+  {A custom notebook class built upon the LOOM template}
+  {$f_n-g_n$}
+  {\today}
+%标题、副标题，作者，日期
+
+\enablerail
+%显示页面左侧导轨，若注释则不显示导轨
+
+\newpage
+
+{\small\tableofcontents}
+%目录
+
+\clearpage
+
+\enpunct{
+
+\section{classico 版介绍}
+
+\textcolor{indigo}{本 classico 版} 基于 \textcolor{madder}{北极甜虾} 的 \textcolor{weld}{\text{LOOM} template} 织就，该作者已在 \textcolor{madder}{GitHub} 开源 \textcolor{selvage}{(Polaris-Aeterna/loom-notes)}。
+
+classico 版基本保留了 \textcolor{weld}{\text{LOOM} template} 的样式和环境定义，但作了以下适配 \textcolor{selvage}{Overleaf} 的改动。
+
+\subsection{徽章和导轨绘制}
+
+受编译时长限制，将封面徽章与左侧导轨外部化（通过 \texttt{loom-emblem.tex} 和 \texttt{loom-rail.tex} 文件插入），便于替换为图片，同时显著提升编译速度。
+
+\subsection{字体适配}
+
+原模板依赖 macOS 特有商业字体（Optima、Avenir Next），未安装时编译报错。classico 版改用 URW Classico（Optima 的开源复刻），用户需自行将字体文件上传至项目 \texttt{fonts/} 目录。若不愿上传字体，可改用同仓的 \texttt{libertinus} 版（正文/数学用 Libertinus、门面用 Libertinus Sans、中文用 Noto CJK，Overleaf 全自带，零上传）。
+
+同时，因该字体缺少 Small Caps 字形，本模板已取消使用 \texttt{\textbackslash textsc} 命令，改用普通大写或 \texttt{\textbackslash texttt} 等替代方案，避免依赖字体特性导致的显示问题。
+
+}
+
+\subsection{标点转换}
+
+定义 \texttt{\textbackslash enpunct} 命令,\ 自动将中文逗号“，”转换为英文逗号加空格“,\ ”、中文句号“。”转换为英文句号加空格“.\ ”,\ 方便中英混排文档的标点统一.
+
+\enpunct{
+
+\subsection{缩进}
+
+段落首行自动向右缩进两个中文字符（\texttt{2em}），符合中文排版习惯。
+
+\subsection{颜色体系}
+
+模板沿用原 “染料” 配色方案：
+\begin{itemize}
+  \item \textcolor{indigo}{靛蓝（indigo）} —— 结构、标题、定理
+  \item \textcolor{madder}{茜草红（madder）} —— 定义、关键词
+  \item \textcolor{weld}{淡黄木（weld）} —— 示例、练习
+  \item \textcolor{inkiron}{铁胆色（inkiron）} —— 正文
+  \item \textcolor{selvage}{灰褐色（selvage）} —— 次要信息、脚注
+\end{itemize}
+
+\subsection{部分数学命令定义}
+
+在类文件中统一预定义了 \texttt{\textbackslash V}、\texttt{\textbackslash Ideal}、\texttt{\textbackslash gen}、\texttt{\textbackslash xb} 等代数几何常用命令，无需在每份文档中重复声明。
+
+\subsection{教学工具完整保留} \textcolor{selvage}{原模板所有教学工具均完整保留}
+
+包括但不限于：\texttt{strand}（直觉对话）、\texttt{block}（小标题）、\texttt{fillin}（填空线）、\texttt{TODO}（待补证明）、\texttt{yourturn}（主动练习）、\texttt{warmth}（自评温度）、\texttt{loose}（边栏疑问）、\texttt{recall}（回顾提示）、\texttt{workspace}（书写区域）、\texttt{keyword}（关键词高亮）以及全部定理类环境（theorem、lemma、proposition、corollary、definition、example、remark）。
+
+\section{classico 版设置说明}
+
+具体的命令设置见 \textcolor{madder}{北极甜虾}的示例文档，请自行摸索；或者静等虾老师发布说明文档。
+
+}
+\end{document}

@@ -88,6 +88,20 @@ every save (LaTeX Workshop defaults to pdflatex, which fails here).
 > automatically to Lato / Gillius / Libertinus (and SimSun / KaiTi / Microsoft
 > YaHei) — no edits to [`loom.cls`](loom.cls) needed.
 
+## On Overleaf
+
+The root `loom.cls` relies on macOS fonts, so two Overleaf-ready editions live
+under [`overleaf/`](overleaf/) — both keep `\documentclass{loom}` and the full
+command set (set the compiler to **XeLaTeX**):
+
+| | font setup | upload? |
+|---|---|---|
+| [`overleaf/libertinus/`](overleaf/libertinus/) | all-Libertinus + Noto CJK — body & math match the original | **nothing to upload** |
+| [`overleaf/classico/`](overleaf/classico/) | URW Classico (closest to the Optima look) — *contributed by [fn-gn](https://github.com/fn-gn)* | 4 font files, you supply |
+
+Most people want [`overleaf/libertinus/`](overleaf/libertinus/): copy it into a
+project, compile, done.
+
 ## The toolkit (all built into the class)
 
 | you want… | you write… |
