@@ -8,12 +8,8 @@ Hard-won from building the example notebooks. Each one cost a compile cycle.
   defaults to pdflatex; the repo's `.vscode/settings.json` overrides it to XeLaTeX.
 - **Run twice** (or use latexmk): the selvage rail uses `remember picture`, and the TOC
   + `\ref`s resolve on the second pass.
-- Cross-platform fonts are **automatic** now: `loom.cls` wraps each face in `\IfFontExistsTF`,
-  so macOS uses Optima/Avenir/Menlo (and Songti/Kaiti/PingFang for CJK) while Windows/Linux fall
-  back to Lato/Gillius/Libertinus (and SimSun/KaiTi/Microsoft YaHei for CJK). No edit needed.
-  On non-macOS the log may show a benign probe miss (`font not found, using nullfont`) as each
-  `\IfFontExistsTF` tests the macOS face, plus one cosmetic `Font shape … sc undefined` from the
-  cover footer's `\textsc` — both harmless.
+- Non-macOS: swap the three `\newfontfamily` lines in `loom.cls` for any display sans;
+  Libertinus (body + math) is bundled with TeX Live and stays.
 
 ## unicode-math gotchas (these throw `Missing { inserted` / `\__um_group_begin:`)
 - **`\mathbb` in a subscript needs braces.** `\PP^1_\R` fails; write `\PP^1_{\R}`.
@@ -38,15 +34,9 @@ Hard-won from building the example notebooks. Each one cost a compile cycle.
   not a literal arrow, or it tofus.
 
 ## Style
-- TeX input ligatures now fire in the display fonts too: the class loads `\headingfont`,
-  `\strandfont`, and `\labelfont` with `[Ligatures=TeX]`, so `---` → em dash and `` `` ``/`''`
-  → curly quotes render correctly in `strand`/`\whisper`/`\block`/headings/cover (the body font
-  Libertinus already had them). You can write `---` and `` ``…'' `` directly; no Unicode
-  workaround needed. (`\setmonofont` is deliberately left without it, so dashes stay literal in
-  code.) Stylistically, still go light on em-dashes in prose; prefer commas/colons.
-- When bulk-replacing in Chinese files, use a tool that handles UTF-8 (`perl -CSD`
-  *double-encodes* an ASCII-typed Chinese replacement → mojibake; use `\x{FF0C}` escapes or
-  Python with `encoding='utf-8'`).
+- Go light on em-dashes (`---`) in prose; prefer commas/colons. When bulk-replacing in
+  Chinese files, use a tool that handles UTF-8 (`perl -CSD` *double-encodes* an ASCII-typed
+  Chinese replacement → mojibake; use `\x{FF0C}` escapes or Python with `encoding='utf-8'`).
 
 ## Verify before declaring done
 Rasterize a page and actually look at it:

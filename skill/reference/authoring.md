@@ -2,7 +2,7 @@
 
 This file is the **entry point** when someone asks you to turn a file in `sources/` into
 Loom study notes. Read it top to bottom, then read
-[`SPINE-ANALYSIS-GUIDE.md`](SPINE-ANALYSIS-GUIDE.md) before writing anything.
+[`spine-analysis.md`](spine-analysis.md) before writing anything.
 
 > **Golden rule.** Notes are **70% readable, 30% to fill**, organized **around one spine**,
 > never a section-by-section transcript of the source. The source is the answer key.
@@ -49,39 +49,20 @@ Small notebooks may keep all sections inline in `main.tex`; larger ones split in
 
 ---
 
-## 2. The Loom grammar — every command
+## 2. The Loom grammar — the working set
 
-Full reference: [`skill/reference/loom-commands.md`](skill/reference/loom-commands.md). The
-working set:
+Full command reference: [`loom-commands.md`](loom-commands.md). Day to day you need:
 
-### Structure & cover
-| command | role |
-|---|---|
-| `\loomcover{title}{subtitle}{author}{date}` | woven title page; **subtitle = the spine**; turns on the rail |
-| `\weave` | start the selvage rail if you skip the cover |
-| `\runningthread{text}` | quiet footer label |
-| `\section` `\subsection` `\subsubsection` | styled headings (number hangs on the rail) |
-| `\block{heading}` | quiet sub-heading inside a section |
-| `\trigger{when-to-use}` | a "reach for this when…" cue line |
-
-### Knots (theorem-likes — auto-colored)
-| environment | color | use |
-|---|---|---|
-| `theorem` `lemma` `proposition` `corollary` | **indigo** | state results **in full** (readable) |
-| `definition` | **madder** | state the term; **blank one defining clause** with `\fillin` |
-| `example` | **weld** | a worked instance; setup given |
-| `remark` / `remark*` | madder italic | asides |
-| `proof` … `\TODO{…}` … | — | ships as a **skeleton**; blank the keystone step |
-
-Optional note in brackets, e.g. `\begin{theorem}[Erdős–Szekeres; src §5]`. **Cite the source
-location in the bracket** so the learner can find the answer key.
-
-### The intuition voice
-| command | role |
-|---|---|
-| `strand` env | informal exposition on an indigo wash — the big idea, read-only |
-| `\whisper{…}` | short inline aside |
-| `\keyword{…}` | madder bold for a key term |
+- **Cover & structure:** `\loomcover{title}{subtitle = the spine}{author}{date}` (turns on the
+  rail), `\runningthread{footer}`, `\section`/`\subsection`, `\block{quiet sub-heading}`,
+  `\trigger{reach for this when…}`.
+- **Knots (auto-colored):** `theorem`/`lemma`/`proposition`/`corollary` (**indigo** — state in
+  full), `definition` (**madder** — blank one clause), `example` (**weld** — a worked instance),
+  `remark`, and `proof … \TODO{…}` (ships as a skeleton). Put the source location in the optional
+  bracket — e.g. `\begin{theorem}[Erdős–Szekeres; src §5]` — so the learner can find the answer key.
+- **Intuition voice:** `strand` env (the big idea, read-only), `\whisper{…}`, `\keyword{…}`.
+- **Selvage & gauges:** `\warmth{0..5}` (top of each section), `\loose{open thread}`,
+  `\warp{key}` / `\pick{key}` (declare then reuse a recurring object).
 
 ### The five fill-in devices (this is the 30%)
 | device | blanks out | example |
@@ -92,19 +73,11 @@ location in the bracket** so the learner can find the answer key.
 | `\workspace[n]` | n ruled lines to write on | put inside `yourturn` |
 | `\recall{question}` | a margin active-recall prompt | `\recall{Why is \(\lceil n/k\rceil\) sharp?}` |
 
-### Selvage edge & gauges
-| command | role |
-|---|---|
-| `\warmth{0..5}` | grok gauge; put `\warmth{0}` at the top of each section |
-| `\loose{question}` | a dangling open thread in the margin |
-| `\warp{key}` / `\pick{key}` | declare a recurring object, pick it up later (cross-ref) |
-| `\weaveid{L03}` | optional inline knot-ID stamp |
-
 ---
 
 ## 3. The 70/30 ratio — what to blank
 
-Read [`skill/reference/method.md`](skill/reference/method.md). In short:
+Read [`method.md`](method.md). In short:
 
 **Leave readable (≈70%):** motivation/intuition (`strand`), full theorem statements, the
 *shape* of a proof (named steps), the cheat-table scaffolding.
@@ -140,10 +113,10 @@ Write **exactly these files**:
      "ratio": { "readable": 0.70, "fillable": 0.30 }
    }
    ```
-   `confidence` follows the rubric in [`SPINE-ANALYSIS-GUIDE.md`](SPINE-ANALYSIS-GUIDE.md).
+   `confidence` follows the rubric in [`spine-analysis.md`](spine-analysis.md).
    `section_order` is your **reorganized** order, not the source's.
 3. **`compile.sh`** — see template below.
-4. **`compile.ps1`** — PowerShell sibling (this repo is used on Windows).
+4. **`compile.ps1`** — PowerShell sibling (for Windows users).
 5. **`loom.cls`** — a **copy** of the repo-root `loom.cls` (self-contained build).
 
 `compile.sh`:
@@ -164,26 +137,17 @@ latexmk -xelatex -interaction=nonstopmode -file-line-error main.tex
 
 ## 5. XeLaTeX / unicode-math pitfalls — verify before compiling
 
-Full list: [`skill/reference/pitfalls.md`](skill/reference/pitfalls.md). The ones that *will*
-bite:
+Full list: [`pitfalls.md`](pitfalls.md) — read it before compiling. The three that *will* bite
+every time:
 
 - **Engine: XeLaTeX only.** `latexmk -xelatex` or `xelatex` **twice** (the selvage rail uses
   `remember picture`; TOC/`\ref` resolve on the second pass). Never pdflatex.
-- **Subscripts on `\mathbb` macros need braces:** write `_{\R}`, **not** `_\R`; define
-  shorthands braced: `\newcommand{\R}{\mathbb{R}}`.
-- **`\widehat` over a macro needs braces:** `\widehat{\E}`, not `\widehat\E`.
+- **Brace macros under scripts/accents:** write `_{\R}` not `_\R`, `\widehat{\E}` not `\widehat\E`.
 - **Do NOT load `amssymb`** — unicode-math already supplies the glyphs (throws
   `\eth already defined`). The class loads only `amsmath, mathtools`.
-- **Arrows in headings/`\block`:** use math mode `$\to$`, not a literal `→` (the heading font
-  may lack the glyph and it tofus).
-- **Multiple `\fillin` on one display line overflow** — stack them in `aligned`.
-- **Wide tables:** use the provided `L` (wrapping) column for the long column.
-- **Margin notes don't auto-avoid:** don't place a `\loose` right after a `yourturn` that ends
-  in a `\recall` — they collide. Keep margin notes spaced out.
-- **Fonts are cross-platform now** (auto-fallback in `loom.cls`): macOS uses Optima/Avenir; other
-  systems fall back to Lato/Gillius/Libertinus and Windows CJK (SimSun/KaiTi/YaHei) automatically.
-  On non-macOS the log may show a harmless probe miss (`font not found, using nullfont`) and one
-  cosmetic `Font shape … sc undefined` from the cover footer — both benign.
+
+Everything else — arrow glyphs in headings, multiple `\fillin` on one line, wide-table columns,
+colliding margin notes, the macOS-font swap for other platforms — is in [`pitfalls.md`](pitfalls.md).
 
 ---
 
@@ -197,7 +161,7 @@ Then check the log is clean and **look at the PDF**:
 ```bash
 grep -cE 'Overfull \\hbox \([0-9]{2,}\.' main.log   # aim ~0 large boxes
 grep -c 'Font shape .* undefined' main.log          # ≤1 (the benign cover sc fallback)
-gs -dQUIET -dBATCH -dNOPAUSE -sDEVICE=png16m -r130 -dFirstPage=2 -dLastPage=2 -o p2.png main.pdf
+pdftoppm -png -r 130 -f 2 -l 2 main.pdf p            # poppler; -> p-2.png (pdftocairo also works)
 ```
 The page should show: woven cover + spine subtitle, the left selvage rail, indigo/madder/weld
 knots, visible `\fillin`/`\TODO`/`yourturn`, margin `\warmth`/`\recall`, and structure that

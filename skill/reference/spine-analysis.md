@@ -103,7 +103,7 @@ the runner-up spine and say why the winner beat it.
 
 ## 5. Worked example (the bundled sample)
 
-Source: [`sources/pigeonhole.md`](sources/pigeonhole.md).
+Source: [`sources/pigeonhole.md`](../../sources/pigeonhole.md).
 
 - **Protagonist:** the pigeonhole principle itself (every section is it, sharpened or applied).
 - **One surviving sentence:** "If `n > k` objects go in `k` boxes, some box has ≥ `⌈n/k⌉` — so

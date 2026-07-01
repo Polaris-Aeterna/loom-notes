@@ -82,11 +82,10 @@ in [`template/main.tex`](template/main.tex). Open the repo in **VS Code** and th
 bundled [`.vscode/settings.json`](.vscode/settings.json) builds with XeLaTeX on
 every save (LaTeX Workshop defaults to pdflatex, which fails here).
 
-> **Requirements.** XeLaTeX (TeX Live 2023+). Libertinus ships with TeX Live.
-> Fonts are **cross-platform out of the box**: on macOS Loom uses Optima / Avenir
-> Next / Menlo (and Songti / 楷体 for 中文); on Windows and Linux it falls back
-> automatically to Lato / Gillius / Libertinus (and SimSun / KaiTi / Microsoft
-> YaHei) — no edits to [`loom.cls`](loom.cls) needed.
+> **Requirements.** XeLaTeX (TeX Live 2023+). Libertinus ships with TeX Live;
+> Optima / Avenir Next / Songti / 楷体 are macOS system fonts. On other platforms,
+> swap the three `\newfontfamily` lines in [`loom.cls`](loom.cls) for any display
+> sans — everything else stays.
 
 ## On Overleaf
 
@@ -128,6 +127,10 @@ gotchas in [`reference/pitfalls.md`](skill/reference/pitfalls.md).
 
 ## Automated notebooks: `sources/` → `output/`
 
+*The source→notebook workflow — `sources/` → `output/`, `CLAUDE.md`, and the
+[`skill/reference/`](skill/reference/) authoring + spine guides — contributed by
+[Sellyew](https://github.com/Sellyew).*
+
 For a hands-off flow, drop a source file in [`sources/`](sources/) and let Claude
 Code do the rest — **you don't pick the spine**:
 
@@ -143,11 +146,18 @@ sources/X.md   ─►   Claude Code            ─►   output/<name>/
    predictive power, teaching impact), reorganizes the material around it, and
    writes a complete notebook to `output/<name>/` — recording the spine analysis
    (idea, pattern, confidence, reasoning) in `metadata.json`.
-4. `bash compile.sh` (or `./compile.ps1` on Windows) and review the PDF.
+4. `bash compile.sh` (or `./compile.ps1` on Windows), then **review the PDF**. A good `main.pdf` shows:
+   - a **woven cover** with the **spine** as its subtitle, and the **left selvage rail** on every page;
+   - **colored knots** — indigo theorems, madder definitions, weld examples;
+   - visible **`\fillin` blanks**, **`\TODO` hints**, and **`yourturn`** boxes with `\workspace` lines;
+   - margin **`\warmth`** gauges and **`\recall`** prompts;
+   - structure that follows **the spine**, not the source's section order.
 
-See [`WORKFLOW.md`](WORKFLOW.md) for the full flow,
-[`SPINE-ANALYSIS-GUIDE.md`](SPINE-ANALYSIS-GUIDE.md) for how the spine is chosen,
-and [`.claude-instructions.md`](.claude-instructions.md) for the syntax it follows.
+   If the gaps land in the wrong places or the spine feels weak, tell Claude Code what to change —
+   e.g. *"blank the keystone step in the strong-form proof instead."*
+
+See [`skill/reference/spine-analysis.md`](skill/reference/spine-analysis.md) for how the spine is
+chosen, and [`skill/reference/authoring.md`](skill/reference/authoring.md) for the syntax it follows.
 A worked example ships in
 [`output/pigeonhole-principle/`](output/pigeonhole-principle/) (spine:
 *"choose the boxes, then count"*).

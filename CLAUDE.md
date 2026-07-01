@@ -27,16 +27,16 @@ generates a complete, compilable notebook under `output/<notebook>/`.
 | `template/` | blank starter + live cheat-sheet (`main.tex`, `main.pdf`) | yes | do **not** clobber `template/main.pdf` |
 | `gallery/*.png` | screenshots for the README | yes | committed on purpose |
 | `skill/` | the `fill-in-notes` Claude skill + deep references | yes | the authoritative method/pitfalls |
+| `skill/reference/*.md` | deep guides: `authoring`, `spine-analysis`, `method`, `loom-commands`, `pitfalls` | yes | route to these for depth |
 | `*.aux *.log *.fls *.fdb_latexmk *.xdv *.toc *.out *.synctex.gz`, `missfont.log` | **build artifacts** | no (`.gitignore`) | transient; never commit |
-| guides: `.claude-instructions.md`, `SPINE-ANALYSIS-GUIDE.md`, `WORKFLOW.md` | docs | yes | route to these for depth |
 
 ## Primary workflow: source → notebook
 
 1. **Read** the named source in `sources/`.
 2. **Find the spine** — the single most powerful organizing idea (highest *coverage*, *predictive
-   power*, *teaching impact*). Pick its pattern and a 0–1 confidence. → `SPINE-ANALYSIS-GUIDE.md`.
+   power*, *teaching impact*). Pick its pattern and a 0–1 confidence. → `skill/reference/spine-analysis.md`.
 3. **Reorganize** the material around that spine; do not transcribe the source order.
-4. **Write** `output/<kebab-name>/` with the syntax + 70/30 rules in `.claude-instructions.md`.
+4. **Write** `output/<kebab-name>/` with the syntax + 70/30 rules in `skill/reference/authoring.md`.
 5. **Compile and verify** (below). Look at the PDF before declaring done.
 
 You do **not** need to ask the user for the spine — that is the job.
@@ -49,7 +49,7 @@ You do **not** need to ask the user for the spine — that is the job.
 - `metadata.json` — the spine analysis: `spine`, `pattern`
   (`single-theorem | engine-list | binary-opposition | organizing-dictionary | linear-narrative`),
   `confidence` (0–1), `reasoning`, `key_concepts`, `section_order`, `ratio`. Full schema:
-  `.claude-instructions.md` §4. Working example: `output/pigeonhole-principle/metadata.json`.
+  `skill/reference/authoring.md` §4. Working example: `output/pigeonhole-principle/metadata.json`.
 - `compile.sh` and `compile.ps1` — one-command builds (bash / PowerShell).
 - `loom.cls` — a **copy** of the root class (see below).
 
@@ -65,13 +65,14 @@ root `loom.cls`, re-sync every copy:**
 for f in $(find . -name loom.cls -not -path './.git/*' -not -path './loom.cls'); do cp loom.cls "$f"; done
 ```
 
-Fonts are cross-platform via `\IfFontExistsTF` (macOS → Optima/Avenir/Menlo + Songti/Kaiti;
-elsewhere → Lato/Gillius/Libertinus + SimSun/KaiTi/Microsoft YaHei). No per-platform edits needed.
+Fonts: macOS uses Optima / Avenir Next / Menlo (+ Songti / 楷体 for CJK). On other platforms,
+swap the three `\newfontfamily` display-font lines in `loom.cls` for any display sans — Libertinus
+(body + math) ships with TeX Live and stays. See `skill/reference/pitfalls.md`.
 
-## Commands (TeX Live 2026 is on PATH; XeLaTeX only)
+## Commands (XeLaTeX only; TeX Live 2023+)
 
 ```powershell
-# Windows / PowerShell (primary shell here)
+# Windows / PowerShell
 cd output\<name>; ./compile.ps1          # or:
 latexmk -xelatex -interaction=nonstopmode -file-line-error main.tex
 ```
@@ -82,7 +83,7 @@ latexmk -xelatex -interaction=nonstopmode main.tex   # latexmk runs the needed t
 ```
 - **Never pdflatex.** If `latexmk` is unavailable, run `xelatex main.tex` **twice** (the selvage
   rail uses `remember picture`; TOC/`\ref` resolve on the 2nd pass).
-- **Rasterize to inspect** (Ghostscript is **not** installed; use poppler):
+- **Rasterize to inspect** (poppler; Ghostscript may be absent):
   `pdftoppm -png -r 130 -f 2 -l 2 main.pdf page` → `page-2.png`. (`pdftocairo` also works.)
 
 ## Verification loop & success criteria
@@ -107,27 +108,29 @@ After compiling:
 
 ## Failure modes to avoid (XeLaTeX / unicode-math / fonts)
 
-- Subscripts/macros over `\mathbb` need braces: `_{\R}` not `_\R`; `\widehat{\E}` not `\widehat\E`.
-- **Do not load `amssymb`** — unicode-math already supplies the glyphs (clashes on `\eth`).
-- Arrows in headings/`\block`: use math mode `$\to$`, not a literal `→` (may tofu).
-- Several `\fillin` on one display line overflow → stack them in `aligned`.
-- Margin notes don't auto-avoid: don't place a `\loose` right after a `yourturn` ending in
-  `\recall` — they collide.
-- Use `[cjk]` only when the notes contain Chinese.
-- **Benign on non-macOS:** the log may show `font not found, using nullfont` (an `\IfFontExistsTF`
-  probe missing the macOS face, then loading the fallback) and one `Font shape … sc undefined`
-  from the cover footer's `\textsc`. Both are harmless — not build failures.
+The three that block a build every time:
 
-Full pitfalls: `skill/reference/pitfalls.md`.
+- Brace macros under scripts/accents: `_{\R}` not `_\R`; `\widehat{\E}` not `\widehat\E`.
+- **Do not load `amssymb`** — unicode-math already supplies the glyphs (clashes on `\eth`).
+- XeLaTeX only, run twice (or `latexmk -xelatex`); never pdflatex.
+
+Use `[cjk]` only when the notes contain Chinese. **On non-macOS**, `loom.cls` won't find the macOS
+display fonts (Optima/Avenir) — swap the three `\newfontfamily` lines for any display sans before
+compiling (see `skill/reference/pitfalls.md`). One `Font shape … sc undefined` from the cover
+footer's `\textsc` is harmless.
+
+Full list — arrows in headings, overflowing `\fillin` rows, colliding margin notes, wide tables:
+`skill/reference/pitfalls.md`.
 
 ## Where the deep rules live (read on demand)
 
 | read this | when |
 |---|---|
-| `.claude-instructions.md` | writing `main.tex` — every command, the fill-in devices, pitfalls, the full output/metadata contract |
-| `SPINE-ANALYSIS-GUIDE.md` | step 2 — the five spine patterns, diagnostic questions, selection criteria, confidence rubric |
-| `WORKFLOW.md` | the end-to-end user-facing flow and the PDF review checklist |
+| `skill/reference/authoring.md` | writing `main.tex` — the grammar, the fill-in devices, the full output/metadata contract |
+| `skill/reference/spine-analysis.md` | step 2 — the five spine patterns, diagnostic questions, selection criteria, confidence rubric |
 | `skill/reference/method.md` | the 70/30 pedagogy — what to leave readable vs. blank, per-section rhythm |
 | `skill/reference/loom-commands.md` | the exhaustive command reference |
+| `skill/reference/pitfalls.md` | the full XeLaTeX / unicode-math trap list |
 | `skill/SKILL.md` | the skill manifest / scope notes |
+| `README.md` | the end-to-end user-facing flow and the PDF review checklist |
 | `examples/*/`, `output/pigeonhole-principle/` | worked notebooks in different spine styles |
